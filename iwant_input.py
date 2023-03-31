@@ -11,15 +11,13 @@ import csv
 import configparser
 import random
 import requests
-import time
 import praw
 import textwrap
-from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, inch
 
 # Define a variable for the common folder path
-folder_path = "C:/Users/Paula/Desktop/Programmieren/iwant/"
+folder_path = "C:/YourFilePath"
 
 # Read credentials from config file
 config = configparser.ConfigParser()
@@ -81,7 +79,7 @@ def extract_text(subreddit, query_string, is_submission=False, num_sentences=100
             response = session.get(pushshift_base_url, params=query_params)
 
             # Check if the API call was successful (error handling currently in main function)
-            if response.status_code == 20:
+            if response.status_code == 200:
                 # Parse the response JSON data
                 json_data = response.json()
 
@@ -115,9 +113,6 @@ def extract_text(subreddit, query_string, is_submission=False, num_sentences=100
                 # Print an error message if the API is down
                 print("Pushshift API is down.")
                 break
-
-            # Wait for 1 second before making the next API call to avoid rate limits
-            time.sleep(1)
 
     # Return the list of extracted sentences
     return list(sentences)
@@ -337,16 +332,14 @@ def main():
 
     # Iterate through subreddits and their respective keywords
     for subreddit, keywords in subreddits_and_keywords.items():
-        print("I'm gonna get some sentences from Reddit!")
+        print(f"I'm gonna get some sentences from {subreddit}!")
         # Create a query string from the keywords
         query_string = '|'.join(f'"{keyword}"' for keyword in keywords)
         # Check if the current subreddit is a submission or not
         is_submission = subreddit == "TrollXChromosomes"
         # Extract sentences from the subreddit based on the query string
         sentences = extract_text(subreddit, query_string, is_submission=is_submission)
-        # Print the number of fetched sentences for each subreddit
-        for subreddit, sentences in sentences_dict.items():
-            print(f"Fetched {len(sentences)} sentences from {subreddit}")
+        
         # If no sentences are found (because the API server is down), create a randomized dictionary from the backup file
         if len(sentences) == 0:
             print("Creating a randomized dictionary from the backup file.")
@@ -358,6 +351,7 @@ def main():
         cleaned_sentences = clean_text(sentences)
         # Store the cleaned sentences in the dictionary
         sentences_dict[subreddit] = cleaned_sentences
+        print(f"Fetched {len(sentences)} sentences from {subreddit}.")
 
     # Create text strings for TrollXChromosomes and AskReddit
     text_trollx = truncate_text(sentences_dict["TrollXChromosomes"])
@@ -369,10 +363,8 @@ def main():
     # Create and save the output PDF file
     output_pdf_path = folder_path + "iwant-output.pdf"
     create_pdf_from_transitions(transition_strings, output_pdf_path)
-    print("Made the depressing pdf!")
+    print("Made the depressing pdf! Have fun!")
 
-    
 # Run the main function when the script is executed
 if __name__ == '__main__':
     main()
-

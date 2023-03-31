@@ -24,11 +24,11 @@ With a simple substitution algorithm, the peaceful, if somewhat typically "termi
 
 Details on the code:
 
-The program tries to request data via pushshift API. If that's down, it uses a backup csv with automatically generated data. It usually loops twice, looking at 1000 comments and submissions, until it has 2x100 sentences. then it makes a list of strings, each representing a page. On page 2, 100 random starting points are chosen. On each following page, one more character (following the last substitution) gets changed. If the algo reaches already changed characters, it looks for a new starting point.
+The program tries to request data via pushshift API. If that's down, it uses a backup csv with automatically generated data. It usually loops once per subreddit, looking at 1000 comments and submissions, until it has 2x100 sentences. then it makes a list of strings, each representing a page. On page 2, 100 random starting points for substituting characters are chosen. On each following page, one more character (following the last substitution) gets changed. If the algo reaches already changed characters, it looks for a new starting point.
 
 Most comments and about half of the code written by ChatGPT.
 
-This program... somewhat works. It has been tested on my pc and nowhere else and does mostly what it should. Still, it needs a proper cleanup and some details aren't quite right. It can probably be optimized.
+This program has been tested on my pc and nowhere else and does mostly what it should. Still, it needs a proper cleanup and some details aren't quite right. It can probably be optimized.
 
 to do on this version:
 - fix transition algo so that is keeps searching for starting points at the beginning, looping around
@@ -37,5 +37,5 @@ to do on this version:
 
 to do on next version:
 - make a simple web interface so that people can interact with the program, requesting new data each time.
-- make cool animations to make it seem like people are typing, at first chatting with each other, then characters or sentences getting corrupted / glitched into the "females... " content.
+- make cool animation to make it seem like people are typing, at first chatting with each other, then characters or sentences getting corrupted / glitched into the "females... " content.
 

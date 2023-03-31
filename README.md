@@ -1,6 +1,7 @@
 # i-want-project v1
 work in progress: a static version to show what it does, eventually it will have a small interactive frontend.
-to run the code right now, it's necessary to set up a reddit account with api access to fill in the credentials.ini file.
+to run the code right now, it's necessary to set up a reddit account with api access to fill in the credentials.ini file. 
+the filepath for the resulting pdf would also need to be changed.
 i've added an example output file, but i'm aiming at an easily usable dynamic version (via web service).
 
 This program requests data from Reddit and puts it together in a pdf.

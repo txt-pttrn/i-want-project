@@ -1,5 +1,7 @@
 # i-want-project v1
 work in progress: a static version to show what it does, eventually it will have a small interactive frontend.
+to run the code right now, it's necessary to set up a reddit account with api access to fill in the credentials.ini file.
+i've added an example output file, but i'm aiming at an easily usable dynamic version (via web service).
 
 This program requests data from Reddit and puts it together in a pdf.
 It's a reflection on navigating the internet as a woman.
@@ -13,7 +15,7 @@ Apart from those tightly moderated communities however, sexism is still widespre
 
 In the last couple of years, thanks to misogynistic internet stars like Andrew Tate, "women" have become "females", and we're being talked about as if we were a non-human species, alien and inferior. When called out, those posters usually pretend that their use of the word is neutral.
 
-By collecting comments starting with "females should" (and variations)  from the largest text-based subreddit AskReddit, the pattern becomes apparent. Sure, some of the comments talk about literal animals - but those fit right into the mix. due to the absurd nature of that language, ironic use of the phrase isn't always clear.
+By collecting comments starting with "females should" (and variations)  from the largest text-based subreddit AskReddit, the pattern becomes apparent. Sure, some of the comments talk about literal animals - but those fit right into the mix. due to the absurd nature of that lingo, ironic use of the phrase isn't always clear.
 
 With a simple substitution algorithm, the peaceful, if somewhat typically "terminally online" chatter on TrollXChromosomes gets disturbed, then entirely consumed. FLINTAs expressing what we want, wish, hope for get overwritten by commenters speculating on our evil desires and telling us what we must do.
 
@@ -28,7 +30,8 @@ This program... somewhat works. It has been tested on my pc and nowhere else and
 
 to do on this version:
 - fix transition algo so that is keeps searching for starting points at the beginning, looping around
-- speed of transition, length of pdf still not optimal
+- wrangle the pdf maker function into maintaining the emoticons instead of deleting them, maybe by switching to another font for smileys
+- possibly make substituted characters italic for easier spotting of the transition
 
 to do on next version:
 - make a simple web interface so that people can interact with the program, requesting new data each time.

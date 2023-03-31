@@ -1,7 +1,8 @@
 # i-want-project v1
 work in progress: a static version to show what it does, eventually it will have a small interactive frontend.
-to run the code right now, it's necessary to set up a reddit account with api access to fill in the credentials.ini file. 
-the filepath for the resulting pdf would also need to be changed.
+to run the code right now, it's necessary to set up a reddit account with api access to fill in the credentials.ini file.
+drop everything in the same folder.
+the filepaths for the resulting pdf and the backup input need to be changed (folder_path).
 i've added an example output file, but i'm aiming at an easily usable dynamic version (via web service).
 
 This program requests data from Reddit and puts it together in a pdf.
@@ -25,7 +26,7 @@ Details on the code:
 
 The program tries to request data via pushshift API. If that's down, it uses a backup csv with automatically generated data. It usually loops twice, looking at 1000 comments and submissions, until it has 2x100 sentences. then it makes a list of strings, each representing a page. On page 2, 100 random starting points are chosen. On each following page, one more character (following the last substitution) gets changed. If the algo reaches already changed characters, it looks for a new starting point.
 
-Almost all comments and about half of the code by ChatGPT.
+Most comments and about half of the code written by ChatGPT.
 
 This program... somewhat works. It has been tested on my pc and nowhere else and does mostly what it should. Still, it needs a proper cleanup and some details aren't quite right. It can probably be optimized.
 

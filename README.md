@@ -31,7 +31,6 @@ Most comments and about half of the code written by ChatGPT.
 This program has been tested on my pc and nowhere else and does mostly what it should. Still, it needs a proper cleanup and some details aren't quite right. It can probably be optimized.
 
 to do on this version:
-- fix transition algo so that is keeps searching for starting points at the beginning, looping around
 - wrangle the pdf maker function into maintaining the emoticons instead of deleting them, maybe by switching to another font for smileys
 - possibly make substituted characters italic for easier spotting of the transition
 

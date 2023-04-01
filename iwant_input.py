@@ -17,7 +17,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter, inch
 
 # Define a variable for the common folder path
-folder_path = "C:/YourFilePath"
+folder_path = "C:/YourFolderHere/"
 
 # Read credentials from config file
 config = configparser.ConfigParser()
@@ -185,7 +185,7 @@ def create_random_dict_from_backup(backup_file_path):
     return randomized_sentences
 
 
-# this function is for formatting: it makes sure that each page ends with a complete sentence instead of cutting off. usually.
+# this function makes the sentences into a page string
 def truncate_text(sentences):
     # Initialize an empty string to store the truncated text
     text = ""
@@ -212,53 +212,51 @@ def truncate_text(sentences):
 # the original page of "i want..." sentences gets replaced bit by bit with the "females..." comments.
 def generate_transitions(text_trollx, text_askreddit):
     
-    # Initialize the list of transition strings starting with text_trollx (the first page)
+    # Initialize the list of pages with the first text (TrollXChromosomes)
     transition_strings = [text_trollx]
-    
-    # Set the total number of strings, including the initial and final strings (= pages)
-    num_strings = 40
+    # Number of pages
+    num_strings = 30
 
-    # Calculate the total number of characters to replace on each page (about 100 in this version)
+    # Calculate the total number of characters to replace on each page
     chars_per_page = len(text_trollx) // (num_strings - 1)
     if chars_per_page % 2 != 0:
         chars_per_page += 1
 
-    # Initialize a set to store the indices of characters that have already been substituted 
-    # Used so that already subtituted characters get skipped in the process
+    # Keep track of already substituted indices
     substituted_indices = set()
-    
-    # Randomly select characters to replace for the first transition
+    # Randomly select indices to replace in the first transition (2nd page)
     indices_to_replace = random.sample(range(len(text_trollx)), chars_per_page)
 
-    # Generate the transition strings (corrupt the original page more each iteration)
+    # Iterate over the remaining pages
     for i in range(1, num_strings):
-        # Create a new string as a copy of the last string in the list
+        # Create a new string, based on the previous page
         new_string = list(transition_strings[-1])
 
-        # Replace characters at the selected indices (following the last substituted character)
+        # Iterate over the indices to replace
         for j, index in enumerate(indices_to_replace):
-            # If the index has already been substituted, find an unsubstituted one
-            while index in substituted_indices:
-                index = (index + 1) % len(new_string)
+            # If the index has already been substituted, find an unsubstituted one randomly
+            if index in substituted_indices:
+                index = random.choice([i for i in range(len(new_string)) if i not in substituted_indices])
 
-            # Replace the character if the index is within the range of the last page
+            # Substitute the character from text_askreddit if the index is within bounds
             if index < len(text_askreddit):
                 new_string[index] = text_askreddit[index]
                 substituted_indices.add(index)
 
-            # Update index for replacing the next character after the last replaced character
+            # Default behaviour: replace the next character after the last replaced character
             next_index = (index + 1) % len(new_string)
             while next_index in substituted_indices:
                 next_index = (next_index + 1) % len(new_string)
             indices_to_replace[j] = next_index
 
-        # Add the new string to the list of transition strings
+        # Add the new string to the list of pages
         transition_strings.append("".join(new_string))
 
-    # Replace the last string in the list with text_askreddit (completed transmission)
+    # Replace the last page with text_askreddit
     transition_strings[-1] = text_askreddit
 
     return transition_strings
+
 
 
 # This function makes a new line so that sentences run on in the next line instead of cutting off
